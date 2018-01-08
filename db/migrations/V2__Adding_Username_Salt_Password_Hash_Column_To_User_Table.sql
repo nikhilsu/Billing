@@ -1,0 +1,2 @@
+ALTER TABLE user_details ADD COLUMN SALT VARCHAR(255),
+                         ADD COLUMN PASSWD_HASH VARCHAR(255);

@@ -55,4 +55,9 @@
     <bean id="persistenceExceptionTranslationPostProcessor"
           class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
+    <bean id="random" class="java.security.SecureRandom" />
+    <bean id="password" class="com.billing.helper.Password" />
+    <bean id="validatorFactory" class="javax.validation.Validation" factory-method="buildDefaultValidatorFactory" />
+    <bean id="validator" factory-bean="validatorFactory" factory-method="getValidator" />
+    <bean id="modelValidator" class="com.billing.helper.validator.ModelValidator" />
 </beans>

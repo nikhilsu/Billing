@@ -13,10 +13,13 @@ public class Constants {
         public static final String LOGIN = "/login";
         public static final String LOGOUT = "/logout";
         public static final String ROOT = "/";
+        public static final String REDIRECT = "redirect:";
+        public static final String REGISTER = "/register";
     }
 
     public static class RedirectPage {
         public static final String INDEX = "index";
         public static final String LOGIN_FORM = "login";
+        public static final String REGISTRATION_FORM = "login";
     }
 }
