@@ -23,7 +23,7 @@ public class User {
     @Size(max = 255, min = 1)
     private String lastName;
 
-    @Column(name = "userId", unique = true)
+    @Column(name = "user_Id", unique = true)
     @Size(max = 255, min = 7)
     private String userId;
 
