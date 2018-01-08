@@ -20,6 +20,6 @@ public class Constants {
     public static class RedirectPage {
         public static final String INDEX = "index";
         public static final String LOGIN_FORM = "login";
-        public static final String REGISTRATION_FORM = "login";
+        public static final String REGISTRATION_FORM = "register";
     }
 }
