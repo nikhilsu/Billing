@@ -1,14 +1,19 @@
 package com.billing.model;
 
 import com.billing.helper.constraint.PasswordHashMatch;
+import com.billing.helper.hibernate.PostgresEnumType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @PasswordHashMatch(passwordHash = "passwordHash", passwordSalt = "salt", passwordString = "password")
 @Entity
 @Table(name = "user_details")
+@TypeDef(name = "pg_sql_enum", typeClass = PostgresEnumType.class)
 public class User {
     @Id
     @Column
@@ -17,24 +22,34 @@ public class User {
 
     @Column(name = "firstname")
     @Size(max = 255, min = 3)
+    @NotNull
     private String firstName;
 
     @Column(name = "lastname")
     @Size(max = 255, min = 1)
+    @NotNull
     private String lastName;
 
     @Column(name = "user_Id", unique = true)
-    @Size(max = 255, min = 7)
+    @Size(max = 255, min = 3)
+    @NotNull
     private String userId;
 
     @Column
     private String salt;
 
     @Column(name = "passwd_hash")
+    @NotNull
     private String passwordHash;
 
     @Transient
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", columnDefinition = "user_role")
+    @Type(type = "pg_sql_enum")
+    @NotNull
+    private UserRole userRole;
 
     public int getId() {
         return id;
@@ -90,6 +105,19 @@ public class User {
     public User setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public User setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+        return this;
+    }
+
+    public boolean isAdmin() {
+        return userRole == UserRole.ADMIN;
     }
 
     @Override

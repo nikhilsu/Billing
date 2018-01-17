@@ -6,10 +6,12 @@ import com.billing.helper.validator.ModelValidator;
 import com.billing.model.BillCategory;
 import com.billing.model.CategoryType;
 import com.billing.service.BillCategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -18,6 +20,7 @@ public class BillCategoryServiceImpl implements BillCategoryService {
     private BillCategoryDao billCategoryDao;
     private ModelValidator modelValidator;
 
+    @Autowired
     public BillCategoryServiceImpl(BillCategoryDao billCategoryDao, ModelValidator modelValidator) {
         this.billCategoryDao = billCategoryDao;
         this.modelValidator = modelValidator;
@@ -25,7 +28,7 @@ public class BillCategoryServiceImpl implements BillCategoryService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Response createBillCategory(String name, float cost, CategoryType type) {
+    public Response createBillCategory(String name, double cost, CategoryType type) {
         BillCategory billCategory = new BillCategory();
         billCategory.setName(name)
                     .setCost(cost)
@@ -44,7 +47,7 @@ public class BillCategoryServiceImpl implements BillCategoryService {
     }
 
     @Override
-    public Response updateBillCategory(int billCategoryId, String name, float cost, CategoryType type) throws Exception {
+    public Response updateBillCategory(int billCategoryId, String name, double cost, CategoryType type) throws Exception {
         Response<BillCategory> findById = billCategoryDao.findById(billCategoryId);
         if (!findById.isSuccessful()) {
             return Response.Failure(findById.errors());
@@ -54,5 +57,10 @@ public class BillCategoryServiceImpl implements BillCategoryService {
                     .setCost(cost)
                     .setCategoryType(type);
         return billCategoryDao.update(billCategory);
+    }
+
+    @Override
+    public Response<List<BillCategory>> getAll() {
+        return billCategoryDao.findAll();
     }
 }

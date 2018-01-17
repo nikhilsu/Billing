@@ -8,7 +8,7 @@ public class Constants {
     public static class ModelAttributes {
         public static final String MESSAGE = "message";
         public static final String RESULT = "result";
-        public static final String UPDATE = "update";
+        public static final String IS_ADMIN = "isAdmin";
     }
 
     public static class Route {
@@ -25,6 +25,7 @@ public class Constants {
         public static final String INDEX = "index";
         public static final String LOGIN_FORM = "login";
         public static final String REGISTRATION_FORM = "register";
-        public static final String BILL_CATEGORY_FORM = "billCategory";
+        public static final String BILL_CATEGORIES = "billCategories";
+        public static final String BILL_CATEGORY_UPDATE_FORM = "billCategoryUpdateForm";
     }
 }

@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class BillCategoryDaoImpl extends BaseDaoImpl implements BillCategoryDao{
 
@@ -33,5 +35,11 @@ public class BillCategoryDaoImpl extends BaseDaoImpl implements BillCategoryDao{
     @Override
     public Response<BillCategory> findById(int id) {
         return Response.Success(getCurrentSession().get(BillCategory.class, id));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Response<List<BillCategory>> findAll() {
+        return Response.Success(getCurrentSession().createQuery("from BillCategory").list());
     }
 }

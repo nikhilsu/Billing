@@ -2,6 +2,7 @@ package com.billing.controller.auth;
 
 import com.billing.helper.Constants;
 import com.billing.helper.Response;
+import com.billing.model.UserRole;
 import com.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class RegisterController {
         String lastName = request.getParameter("lastName");
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
-        Response save = userService.createUser(firstName, lastName, userId, password);
+        Response save = userService.createUser(firstName, lastName, userId, password, UserRole.USER);
         String redirectMessage = "Failed";
         if (save.isSuccessful()) {
             session.setAttribute(Constants.SessionKeys.LOGGED_IN_USER, save.data());

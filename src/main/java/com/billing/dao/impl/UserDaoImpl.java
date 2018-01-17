@@ -31,4 +31,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
             return Response.Failure(exception.getMessage());
         }
     }
+
+    @Override
+    public Response<User> findById(int userId) {
+        return Response.Success(getCurrentSession().get(User.class, userId));
+    }
 }

@@ -5,6 +5,7 @@ import com.billing.helper.Password;
 import com.billing.helper.Response;
 import com.billing.helper.validator.ModelValidator;
 import com.billing.model.User;
+import com.billing.model.UserRole;
 import com.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response<Integer> createUser(String firstName, String lastName,
-                                        String userId, String password) {
+                                        String userId, String password, UserRole userRole) {
         String salt = passwordHash.getNextSalt();
         String password_hash = passwordHash.hash(password, salt);
         User user = new User();
@@ -37,9 +38,10 @@ public class UserServiceImpl implements UserService {
                 .setUserId(userId)
                 .setPassword(password)
                 .setSalt(salt)
-                .setPasswordHash(password_hash);
+                .setPasswordHash(password_hash)
+                .setUserRole(userRole);
         Response userValidationResponse = modelValidator.validate(user);
-        if (userValidationResponse.isSuccessful())
+        if (!userValidationResponse.isSuccessful())
             return Response.Failure(userValidationResponse.errors());
         return userDao.save(user);
     }
@@ -55,5 +57,10 @@ public class UserServiceImpl implements UserService {
             return Response.Failure(validationResponse.errors());
         }
         return Response.Success(user.getId());
+    }
+
+    @Override
+    public Response<User> getUserById(int userId) throws Exception {
+        return Response.Success(userDao.findById(userId).data());
     }
 }

@@ -36,7 +36,7 @@ public class Response<T> {
 
     public T data() throws Exception {
         if (result == null)
-            throw new Exception("Save failed, no serial id");
+            throw new Exception("No data available");
         return result;
     }
 

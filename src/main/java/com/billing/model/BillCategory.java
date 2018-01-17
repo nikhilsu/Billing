@@ -22,10 +22,10 @@ public class BillCategory {
     private String name;
 
     @Column(name = "cost")
-    private float cost;
+    private double cost;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "bill_category_type")
+    @Column(name = "category_type", columnDefinition = "bill_category_type")
     @Type(type = "pg_sql_enum")
     private CategoryType categoryType;
 
@@ -56,11 +56,11 @@ public class BillCategory {
         return this;
     }
 
-    public float getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public BillCategory setCost(float cost) {
+    public BillCategory setCost(double cost) {
         this.cost = cost;
         return this;
     }
