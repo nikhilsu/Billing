@@ -1,10 +1,13 @@
 package com.billing.model;
 
+import com.billing.helper.constraint.EnsureNumber;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -23,11 +26,14 @@ public class Patient {
 
     @Column(name = "age")
     @NotNull
+    @Min(1)
+    @Max(130)
     private int age;
 
     @Column(name = "phone_number")
-    @Size(min = 10, max = 12)
+    @Size(min = 10, max = 11)
     @NotNull
+    @EnsureNumber(message = "Can contain only numbers")
     private String phoneNumber;
 
     @Email

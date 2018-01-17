@@ -7,4 +7,5 @@ public interface PatientDao {
     Response<Integer> save(Patient patient);
     Response update(Patient patient);
     Response<Patient> findByPhoneNumber(String phoneNumber);
+    Response<Patient> findById(int patientId);
 }

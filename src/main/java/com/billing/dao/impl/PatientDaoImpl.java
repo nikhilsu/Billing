@@ -36,4 +36,9 @@ public class PatientDaoImpl extends BaseDaoImpl implements PatientDao {
             return Response.Failure(exception.getMessage());
         }
     }
+
+    @Override
+    public Response<Patient> findById(int patientId) {
+        return Response.Success(getCurrentSession().get(Patient.class, patientId));
+    }
 }
