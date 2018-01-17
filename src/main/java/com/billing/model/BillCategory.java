@@ -1,6 +1,5 @@
 package com.billing.model;
 
-
 import com.billing.helper.hibernate.PostgresEnumType;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -27,10 +26,10 @@ public class BillCategory {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "bill_category_type")
-    @Type(type = "pg_sql_enum" )
+    @Type(type = "pg_sql_enum")
     private CategoryType categoryType;
 
-    @ManyToMany(cascade = { CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "bill_bill_category",
             joinColumns = {@JoinColumn(name = "bill_category_id")},

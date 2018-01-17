@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -17,14 +18,17 @@ public class Patient {
     private int id;
 
     @Column(name = "name")
+    @NotNull
     private String name;
 
     @Column(name = "age")
+    @NotNull
     private int age;
 
     @Column(name = "phone_number")
     @Size(min = 10, max = 12)
-    private int phone;
+    @NotNull
+    private String phoneNumber;
 
     @Email
     @Column(name = "email")
@@ -70,12 +74,12 @@ public class Patient {
         return this;
     }
 
-    public int getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public Patient setPhone(int phone) {
-        this.phone = phone;
+    public Patient setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
         return this;
     }
 

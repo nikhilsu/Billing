@@ -21,12 +21,17 @@ public class BillCategoryDaoImpl extends BaseDaoImpl implements BillCategoryDao{
     }
 
     @Override
-    public Response deleteByCardId(int billCategoryId) {
+    public Response deleteById(int billCategoryId) {
         return super.delete(getCurrentSession().get(BillCategory.class, billCategoryId));
     }
 
     @Override
     public Response update(BillCategory billCategory) {
         return super.update(billCategory);
+    }
+
+    @Override
+    public Response<BillCategory> findById(int id) {
+        return Response.Success(getCurrentSession().get(BillCategory.class, id));
     }
 }

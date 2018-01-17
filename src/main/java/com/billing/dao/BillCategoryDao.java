@@ -5,6 +5,7 @@ import com.billing.model.BillCategory;
 
 public interface BillCategoryDao {
     Response<Integer> save(BillCategory billCategory);
-    Response deleteByCardId(int billCategoryId);
+    Response deleteById(int billCategoryId);
     Response update(BillCategory billCategory);
+    Response<BillCategory> findById(int id);
 }
