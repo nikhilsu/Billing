@@ -3,32 +3,22 @@ package com.billing.dao.impl;
 import com.billing.dao.UserDao;
 import com.billing.helper.Response;
 import com.billing.model.User;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao {
-    private final SessionFactory sessionFactory;
+public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Autowired
     public UserDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+        super(sessionFactory);
     }
 
     @Override
     public Response<Integer> save(User user) {
-        try {
-            Integer serialId = (Integer) getCurrentSession().save(user);
-            return Response.Success(serialId);
-        } catch (HibernateException exception) {
-            // TODO: Log exception
-            System.out.println(exception.getMessage());
-            return Response.Failure(exception.getMessage());
-        }
+       return super.save(user);
     }
 
     @Override
@@ -40,9 +30,5 @@ public class UserDaoImpl implements UserDao {
         } catch (Exception exception) {
             return Response.Failure(exception.getMessage());
         }
-    }
-
-    private Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
     }
 }

@@ -1,0 +1,1 @@
+CREATE TYPE bill_category_type AS ENUM ('LAB', 'CLINIC');
