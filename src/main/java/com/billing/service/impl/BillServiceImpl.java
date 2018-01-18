@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -37,5 +39,13 @@ public class BillServiceImpl implements BillService {
                               .setPatient(patient)
                               .setCreatedOn(timeNowInUTC);
         return billDao.save(bill);
+    }
+
+    @Override
+    public Response<List<Bill>> getByDateRange(String startDate, String endDate) throws Exception {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date start = formatter.parse(startDate);
+        Date end = formatter.parse(endDate);
+        return billDao.findDateRange(new Timestamp(start.getTime()), new Timestamp(end.getTime()));
     }
 }

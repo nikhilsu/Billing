@@ -5,7 +5,6 @@ import com.billing.helper.Constants;
 import com.billing.helper.Response;
 import com.billing.model.BillCategory;
 import com.billing.model.CategoryType;
-import com.billing.model.User;
 import com.billing.service.BillCategoryService;
 import com.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class BillCategoryController {
+public class BillCategoryController extends BaseController {
     private final BillCategoryService billCategoryService;
-    private final UserService userService;
 
     @Autowired
     public BillCategoryController(BillCategoryService billCategoryService, UserService userService) {
+        super(userService);
         this.billCategoryService = billCategoryService;
-        this.userService = userService;
     }
 
     @RequestMapping(value = Constants.Route.BILL_CATEGORY, method = RequestMethod.GET)
@@ -70,11 +68,5 @@ public class BillCategoryController {
             model.addAttribute(Constants.ModelAttributes.MESSAGE, billCategoryUpdate.isSuccessful() ? "Success" : "Failed");
         }
         return Constants.RedirectPage.INDEX;
-    }
-
-    private boolean currentUserAdmin(HttpSession session) throws Exception {
-        int userId = Integer.valueOf(session.getAttribute(Constants.SessionKeys.LOGGED_IN_USER).toString());
-        Response<User> userById = userService.getUserById(userId);
-        return userById.isSuccessful() && userById.data().isAdmin();
     }
 }

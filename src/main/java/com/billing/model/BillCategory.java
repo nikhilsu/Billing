@@ -29,12 +29,7 @@ public class BillCategory {
     @Type(type = "pg_sql_enum")
     private CategoryType categoryType;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "bill_bill_category",
-            joinColumns = {@JoinColumn(name = "bill_category_id")},
-            inverseJoinColumns = {@JoinColumn(name = "bill_id")}
-    )
+    @ManyToMany(mappedBy = "billCategories")
     @LazyCollection(value = LazyCollectionOption.FALSE)
     private List<Bill> bills;
 

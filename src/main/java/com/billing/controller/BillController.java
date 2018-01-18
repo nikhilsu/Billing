@@ -2,11 +2,14 @@ package com.billing.controller;
 
 import com.billing.helper.Constants;
 import com.billing.helper.Response;
+import com.billing.model.Bill;
 import com.billing.model.BillCategory;
 import com.billing.model.Patient;
 import com.billing.service.BillCategoryService;
 import com.billing.service.BillService;
 import com.billing.service.PatientService;
+import com.billing.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,22 +17,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class BillController {
+public class BillController extends BaseController{
     private final BillService billService;
     private PatientService patientService;
     private BillCategoryService billCategoryService;
 
-    public BillController(BillService billService, PatientService patientService, BillCategoryService billCategoryService) {
+    @Autowired
+    public BillController(BillService billService, PatientService patientService, BillCategoryService billCategoryService, UserService userService) {
+        super(userService);
         this.billService = billService;
         this.patientService = patientService;
         this.billCategoryService = billCategoryService;
     }
 
-    @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.GET)
+    @RequestMapping(value = Constants.Route.NEW_BILL, method = RequestMethod.GET)
     public String getNewBillForm(@RequestParam("patientId") int patientId, Model model) throws Exception {
         Response<Patient> findPatient = patientService.getById(patientId);
         if (findPatient.isSuccessful()) {
@@ -42,6 +48,22 @@ public class BillController {
         model.addAttribute(Constants.ModelAttributes.MESSAGE, "Patient not found");
         return Constants.RedirectPage.INDEX;
     }
+
+    @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.GET)
+    public String getBills(HttpServletRequest request, HttpSession session, Model model) throws Exception {
+        if (currentUserAdmin(session)) {
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
+            Response<List<Bill>> byDateRange = billService.getByDateRange(startDate, endDate);
+            if (!byDateRange.isSuccessful() || byDateRange.data().isEmpty()) {
+                model.addAttribute( Constants.ModelAttributes.MESSAGE, "No bills found for this range");
+            }
+            model.addAttribute( Constants.ModelAttributes.RESULT, byDateRange.data());
+            return Constants.RedirectPage.BILL;
+        }
+        return Constants.RedirectPage.INDEX;
+    }
+
 
     @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.POST)
     public String createNewBill(HttpServletRequest request, Model model) throws Exception {

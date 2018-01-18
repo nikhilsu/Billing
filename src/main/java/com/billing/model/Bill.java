@@ -20,7 +20,12 @@ public class Bill {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    @ManyToMany(mappedBy = "bills")
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "bill_bill_category",
+            joinColumns = {@JoinColumn(name = "bill_id")},
+            inverseJoinColumns = {@JoinColumn(name = "bill_category_id")}
+    )
     @LazyCollection(value = LazyCollectionOption.FALSE)
     private List<BillCategory> billCategories;
 
@@ -63,5 +68,14 @@ public class Bill {
     public Bill setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
         return this;
+    }
+
+
+    public double totalCost() {
+        double total = 0.0;
+        for (BillCategory category : billCategories) {
+            total += category.getCost();
+        }
+        return total;
     }
 }

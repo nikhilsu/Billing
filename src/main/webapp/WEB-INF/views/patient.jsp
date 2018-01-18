@@ -9,7 +9,7 @@
         <p>Age: ${patient.age}</p>
         <p>Phone number: ${patient.phoneNumber}</p>
         <p>Email: ${patient.email}</p>
-        <a href="${pageContext.request.contextPath}/bill?patientId=${patient.id}">Select</a>
+        <a href="${pageContext.request.contextPath}/new-bill?patientId=${patient.id}">Select</a>
     </div>
 </c:forEach>
 </body>

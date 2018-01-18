@@ -34,6 +34,7 @@ public class EnumUserType implements UserType, ParameterizedType {
         return clazz;
     }
 
+    @SuppressWarnings("unchecked")
     public Object nullSafeGet(ResultSet resultSet, String[] names, SharedSessionContractImplementor session, Object owner) throws HibernateException,
             SQLException {
         String name = resultSet.getString(names[0]);

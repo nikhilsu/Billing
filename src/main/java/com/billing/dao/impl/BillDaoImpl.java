@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -25,7 +26,16 @@ public class BillDaoImpl extends BaseDaoImpl implements BillDao {
     @Override
     @SuppressWarnings("unchecked")
     public Response<List<Bill>> findAll() {
-        return Response.Success(getCurrentSession().createQuery("from Bill").list());
+        return Response.Success(getCurrentSession().createQuery("FROM Bill").list());
 
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Response<List<Bill>> findDateRange(Timestamp startDate, Timestamp endDate) {
+        return Response.Success(getCurrentSession().createQuery("FROM Bill WHERE createdOn BETWEEN :startDate AND :endDate ")
+                       .setParameter("startDate", startDate)
+                       .setParameter("endDate", endDate)
+                       .getResultList());
     }
 }
