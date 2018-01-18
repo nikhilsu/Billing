@@ -31,13 +31,13 @@ public class RegisterController {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
         Response save = userService.createUser(firstName, lastName, userId, password, UserRole.USER);
-        String redirectMessage = "Failed";
+        model.addAttribute(Constants.ModelAttributes.RESULT, save.isSuccessful());
         if (save.isSuccessful()) {
             session.setAttribute(Constants.SessionKeys.LOGGED_IN_USER, save.data());
-            redirectMessage = "Success";
+            return Constants.Route.REDIRECT + Constants.Route.ROOT;
         }
 
-        model.addAttribute(Constants.ModelAttributes.MESSAGE, redirectMessage);
-        return Constants.Route.REDIRECT + Constants.Route.ROOT;
+        model.addAttribute(Constants.ModelAttributes.MESSAGE, save.errors().get(0));
+        return Constants.RedirectPage.REGISTRATION_FORM;
     }
 }

@@ -1,20 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" scope="request" value="Register"/>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-</head>
+<%@ include file="header.jsp" %>
+
 <body>
-<h1>Registration</h1>
-<div>
-    <form action="${pageContext.request.contextPath}/register" method="post">
-        <input placeholder="First Name" type="text" name="firstName"/>
-        <input placeholder="Last Name" type="text" name="lastName"/>
-        <input placeholder="User Id" type="text" name="userId"/>
-        <input type="password" placeholder="Password" name="password"/>
-        <input type="submit" value="Register"/>
-    </form>
+<div class="login-page">
+    <div class="form">
+        <p class="login-form-message">Registration</p>
+        <c:if test="${result == false}">
+            <p class="login-error-message">${message}</p>
+        </c:if>
+        <form action="${pageContext.request.contextPath}/register" method="post">
+            <input type="text" placeholder="First Name" name="firstName"/>
+            <input type="text" placeholder="Last Name" name="lastName"/>
+            <input type="text" placeholder="User Id" name="userId"/>
+            <input type="password" placeholder="Password" name="password"/>
+            <button>Register</button>
+        </form>
+    </div>
 </div>
 </body>
-</html>

@@ -2,16 +2,13 @@
 <c:set var="pageTitle" scope="request" value="Login"/>
 <%@ include file="header.jsp" %>
 
-<head>
-    <script type="text/javascript" src="js/login.js"></script>
-</head>
 <body>
 <div class="login-page">
     <div class="form">
         <c:if test="${result == false}">
-            <p class="login-error-message">Invalid user id or password</p>
+            <p class="login-error-message login-form-message">Invalid user id or password</p>
         </c:if>
-        <form class="login-form" action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/login" method="post">
             <input type="text" placeholder="user id" name="userId"/>
             <input type="password" placeholder="password" name="password"/>
             <button>login</button>
