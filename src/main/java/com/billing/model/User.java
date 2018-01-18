@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @PasswordHashMatch(passwordHash = "passwordHash", passwordSalt = "salt", passwordString = "password")
 @Entity
-@Table(name = "user_details")
+@Table(name = "user_details", uniqueConstraints=@UniqueConstraint(columnNames="user_id"))
 @TypeDef(name = "pg_sql_enum", typeClass = PostgresEnumType.class)
 public class User {
     @Id
@@ -30,7 +30,7 @@ public class User {
     @NotNull
     private String lastName;
 
-    @Column(name = "user_Id", unique = true)
+    @Column(name = "user_Id")
     @Size(max = 255, min = 3)
     @NotNull
     private String userId;

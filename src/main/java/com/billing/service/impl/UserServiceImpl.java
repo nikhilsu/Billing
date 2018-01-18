@@ -29,9 +29,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response<Integer> createUser(String firstName, String lastName,
-                                        String userId, String password, UserRole userRole) {
+                                        String userId, String password, UserRole userRole) throws Exception {
         String salt = passwordHash.getNextSalt();
         String password_hash = passwordHash.hash(password, salt);
+        if (userDao.findByUserId(userId).isSuccessful())
+            return Response.Failure("User id already in use.");
         User user = new User();
         user.setFirstName(firstName)
                 .setLastName(lastName)
