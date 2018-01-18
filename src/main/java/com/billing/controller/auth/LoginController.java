@@ -29,6 +29,9 @@ public class LoginController {
 
     @RequestMapping(value = Constants.Route.LOGIN, method = RequestMethod.POST)
     public String login(HttpServletRequest request, HttpSession session, Model model) throws Exception {
+        if (session.getAttribute(Constants.SessionKeys.LOGGED_IN_USER) != null)
+            return Constants.Route.REDIRECT + Constants.Route.ROOT;
+
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
         Response<Integer> response = userService.loginUser(userId, password);
@@ -36,8 +39,8 @@ public class LoginController {
             session.setAttribute(Constants.SessionKeys.LOGGED_IN_USER, response.data());
             return Constants.Route.REDIRECT + Constants.Route.ROOT;
         }
-        model.addAttribute(Constants.ModelAttributes.MESSAGE, "Login Failed");
-        return Constants.Route.REDIRECT + Constants.Route.ROOT;
+        model.addAttribute(Constants.ModelAttributes.RESULT, false);
+        return Constants.RedirectPage.LOGIN_FORM;
     }
 
     @RequestMapping(value = Constants.Route.LOGOUT)

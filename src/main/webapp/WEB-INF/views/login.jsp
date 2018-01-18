@@ -1,15 +1,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" scope="request" value="Login"/>
-<!DOCTYPE html>
-<html lang="en">
+<%@ include file="header.jsp" %>
+
 <head>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script type="text/javascript" src="js/login.js"></script>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/login" method="post">
-        <input placeholder="User id" type="text" name="userId" />
-        <input type="password" placeholder="Password" name="password" />
-        <input type="submit" value="Login"/>
-    </form>
+<div class="login-page">
+    <div class="form">
+        <c:if test="${result == false}">
+            <p class="login-error-message">Invalid user id or password</p>
+        </c:if>
+        <form class="login-form" action="${pageContext.request.contextPath}/login" method="post">
+            <input type="text" placeholder="user id" name="userId"/>
+            <input type="password" placeholder="password" name="password"/>
+            <button>login</button>
+            <p class="message">Not registered? <a href="${pageContext.request.contextPath}/register">Create an account</a></p>
+        </form>
+    </div>
+</div>
 </body>
-</html>
