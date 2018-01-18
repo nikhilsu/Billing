@@ -16,6 +16,9 @@
     });
 </script>
 <body>
+<a href="${pageContext.request.contextPath}/bill-category">Create new bill category</a>
+
+<h4>Choose from the categories below</h4>
 <form action="${pageContext.request.contextPath}/bill" method="post">
     <c:forEach var="category" items="${billCategories}">
         <label>
