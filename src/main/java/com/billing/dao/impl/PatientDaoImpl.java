@@ -8,6 +8,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class PatientDaoImpl extends BaseDaoImpl implements PatientDao {
 
@@ -27,11 +29,12 @@ public class PatientDaoImpl extends BaseDaoImpl implements PatientDao {
     }
 
     @Override
-    public Response<Patient> findByPhoneNumber(String phoneNumber) {
+    @SuppressWarnings("unchecked")
+    public Response<List<Patient>> findByPhoneNumber(String phoneNumber) {
         Query query = getCurrentSession().createQuery("from Patient where phoneNumber = :phoneNumber");
         query.setParameter("phoneNumber", phoneNumber);
         try {
-            return Response.Success((Patient) query.getSingleResult());
+            return Response.Success(query.getResultList());
         } catch (Exception exception) {
             return Response.Failure(exception.getMessage());
         }

@@ -30,8 +30,8 @@ public class BillController {
     }
 
     @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.GET)
-    public String getNewBillForm(@RequestParam("phoneNumber") String phoneNumber, Model model) throws Exception {
-        Response<Patient> findPatient = patientService.getByPhoneNumber(phoneNumber);
+    public String getNewBillForm(@RequestParam("patientId") int patientId, Model model) throws Exception {
+        Response<Patient> findPatient = patientService.getById(patientId);
         if (findPatient.isSuccessful()) {
             Response<List<BillCategory>> allCategories = billCategoryService.getAll();
             model.addAttribute("billCategories", allCategories.data());

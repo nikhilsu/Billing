@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public class PatientServiceImpl implements PatientService {
@@ -23,7 +25,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Response createNewPatient(String name, int age, String phoneNumber, String email) {
+    public Response<Integer> createNewPatient(String name, int age, String phoneNumber, String email) {
         Patient patient = new Patient().setName(name)
                                         .setAge(age)
                                         .setPhoneNumber(phoneNumber)
@@ -36,7 +38,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Response<Patient> getByPhoneNumber(String phoneNumber) {
+    public Response<List<Patient>> getByPhoneNumber(String phoneNumber) {
         return patientDao.findByPhoneNumber(phoneNumber);
     }
 

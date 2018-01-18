@@ -3,13 +3,14 @@
 <%@ include file="header.jsp" %>
 <script>
     $(document).ready(function() {
+        $('#total').text('Total: Rs. 0.0');
         $('.category-checkbox:checkbox').each(function () {
             $(this).change(function () {
-                var totalCost = 0;
+                var totalCost = 0.0;
                 $('.category-checkbox:checkbox:checked').each(function () {
                     totalCost += parseFloat($(this).attr('cost'));
                 });
-                $('#total').text('Total: ' + totalCost);
+                $('#total').text('Total: Rs. ' + totalCost);
             });
         });
     });

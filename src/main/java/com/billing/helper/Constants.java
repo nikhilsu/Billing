@@ -21,6 +21,11 @@ public class Constants {
         public static final String UPDATE_BILL_CATEGORY = "/bill-category/{id}";
         public static final String BILL = "/bill";
         public static final String PATIENT = "/patient";
+        public static final String NEW_PATIENT_FORM = "/new-patient";
+
+        public static String BILL(int patientId) {
+            return BILL + "?patientId=" + patientId;
+        }
     }
 
     public static class RedirectPage {
@@ -31,5 +36,6 @@ public class Constants {
         public static final String BILL_CATEGORY_UPDATE_FORM = "billCategoryUpdateForm";
         public static final String BILL_CREATE_FORM = "newBill";
         public static final String NEW_PATIENT_FORM = "newPatientForm";
+        public static final String PATIENT = "patient";
     }
 }
