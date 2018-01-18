@@ -37,7 +37,7 @@ public class LoginController {
             return Constants.Route.REDIRECT + Constants.Route.ROOT;
         }
         model.addAttribute(Constants.ModelAttributes.MESSAGE, "Login Failed");
-        return Constants.RedirectPage.LOGIN_FORM;
+        return Constants.Route.REDIRECT + Constants.Route.ROOT;
     }
 
     @RequestMapping(value = Constants.Route.LOGOUT)
