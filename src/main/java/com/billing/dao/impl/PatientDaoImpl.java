@@ -24,11 +24,6 @@ public class PatientDaoImpl extends BaseDaoImpl implements PatientDao {
     }
 
     @Override
-    public Response update(Patient patient) {
-        return super.update(patient);
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public Response<List<Patient>> findByPhoneNumber(String phoneNumber) {
         Query query = getCurrentSession().createQuery("from Patient where phoneNumber = :phoneNumber");

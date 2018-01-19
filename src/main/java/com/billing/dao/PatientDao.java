@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface PatientDao {
     Response<Integer> save(Patient patient);
-    Response update(Patient patient);
     Response<List<Patient>> findByPhoneNumber(String phoneNumber);
     Response<Patient> findById(int patientId);
 }

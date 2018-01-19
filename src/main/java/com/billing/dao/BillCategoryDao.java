@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface BillCategoryDao {
     Response<Integer> save(BillCategory billCategory);
-    Response deleteById(int billCategoryId);
     Response update(BillCategory billCategory);
     Response<BillCategory> findById(int id);
+    Response<BillCategory> findByName(String name, boolean ignoreCase);
     Response<List<BillCategory>> findAll();
 }

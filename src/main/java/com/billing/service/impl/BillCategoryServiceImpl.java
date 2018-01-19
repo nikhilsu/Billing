@@ -28,7 +28,9 @@ public class BillCategoryServiceImpl implements BillCategoryService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Response createBillCategory(String name, double cost, CategoryType type) {
+    public Response createBillCategory(String name, double cost, CategoryType type) throws Exception {
+        if(categoryOfSameNameAndTypeExists(name, type))
+            return Response.Failure("Category already exists");
         BillCategory billCategory = new BillCategory();
         billCategory.setName(name)
                     .setCost(cost)
@@ -62,5 +64,10 @@ public class BillCategoryServiceImpl implements BillCategoryService {
     @Override
     public Response<List<BillCategory>> getAll() {
         return billCategoryDao.findAll();
+    }
+
+    private boolean categoryOfSameNameAndTypeExists(String name, CategoryType type) throws Exception {
+        Response<BillCategory> findCategoryWithSameName = billCategoryDao.findByName(name, true);
+        return findCategoryWithSameName.isSuccessful() && findCategoryWithSameName.data().getCategoryType() == type;
     }
 }

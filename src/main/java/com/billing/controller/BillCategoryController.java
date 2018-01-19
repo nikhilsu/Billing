@@ -43,7 +43,8 @@ public class BillCategoryController extends BaseController {
             double cost = Double.valueOf(request.getParameter("cost"));
             CategoryType type = CategoryType.valueOf(request.getParameter("type").toUpperCase());
             Response billCategoryCreation = billCategoryService.createBillCategory(name, cost, type);
-            model.addAttribute(Constants.ModelAttributes.MESSAGE, billCategoryCreation.isSuccessful() ? "Success" : "Failed");
+            model.addAttribute(Constants.ModelAttributes.RESULT, billCategoryCreation.isSuccessful());
+            model.addAttribute(Constants.ModelAttributes.MESSAGE, billCategoryCreation.isSuccessful() ? "Success" : billCategoryCreation.errors().get(0));
         }
         return Constants.RedirectPage.INDEX;
     }
