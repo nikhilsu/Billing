@@ -24,8 +24,8 @@ public class Constants {
         public static final String PATIENT = "/patient";
         public static final String NEW_PATIENT_FORM = "/new-patient";
 
-        public static String BILL(int patientId) {
-            return BILL + "?patientId=" + patientId;
+        public static String NEW_BILL(int patientId) {
+            return NEW_BILL + "?patientId=" + patientId;
         }
     }
 

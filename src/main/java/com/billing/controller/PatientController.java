@@ -48,7 +48,7 @@ public class PatientController {
         String email = request.getParameter("email");
         Response<Integer> newPatient = patientService.createNewPatient(name, age, phoneNumber, email);
         if (newPatient.isSuccessful())
-            return Constants.Route.REDIRECT + Constants.Route.BILL(newPatient.data());
+            return Constants.Route.REDIRECT + Constants.Route.NEW_BILL(newPatient.data());
 
         model.addAttribute(Constants.ModelAttributes.MESSAGE, "Cannot create new patient");
         return Constants.RedirectPage.NEW_PATIENT_FORM;
