@@ -17,6 +17,7 @@
 
 <c:if test="${isAdmin == true}">
     <h3>Create new category</h3>
+    <h4>${message}</h4>
     <form action="${pageContext.request.contextPath}/bill-category" method="post">
         <label for="category-name">Name</label>
         <input placeholder="Name" type="text" id="category-name" name="name"/>

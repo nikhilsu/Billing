@@ -1,0 +1,1 @@
+ALTER TABLE bill_category ADD CONSTRAINT constraint_unique_name_type UNIQUE (NAME, CATEGORY_TYPE);

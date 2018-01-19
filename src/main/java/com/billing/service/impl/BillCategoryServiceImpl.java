@@ -30,7 +30,7 @@ public class BillCategoryServiceImpl implements BillCategoryService {
     @SuppressWarnings("unchecked")
     public Response createBillCategory(String name, double cost, CategoryType type) throws Exception {
         if(categoryOfSameNameAndTypeExists(name, type))
-            return Response.Failure("Category already exists");
+            return Response.Failure("Category with same name and type already exists");
         BillCategory billCategory = new BillCategory();
         billCategory.setName(name)
                     .setCost(cost)
