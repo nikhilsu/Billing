@@ -18,7 +18,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public Response<Integer> save(User user) {
-       return super.save(user);
+        return super.save(user);
     }
 
     @Override
@@ -34,6 +34,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public Response<User> findById(int userId) {
-        return Response.Success(getCurrentSession().get(User.class, userId));
+        try {
+            return Response.Success(getCurrentSession().get(User.class, userId));
+        } catch (Exception exception) {
+            return Response.Failure(exception.getMessage());
+        }
     }
 }

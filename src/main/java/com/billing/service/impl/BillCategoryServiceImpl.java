@@ -67,7 +67,8 @@ public class BillCategoryServiceImpl implements BillCategoryService {
     }
 
     private boolean categoryOfSameNameAndTypeExists(String name, CategoryType type) throws Exception {
-        Response<BillCategory> findCategoryWithSameName = billCategoryDao.findByName(name, true);
-        return findCategoryWithSameName.isSuccessful() && findCategoryWithSameName.data().getCategoryType() == type;
+        Response<List<BillCategory>> findCategoryWithSameName = billCategoryDao.findByName(name, true);
+        return findCategoryWithSameName.isSuccessful() &&
+               findCategoryWithSameName.data().stream().anyMatch(category -> category.getCategoryType() == type);
     }
 }

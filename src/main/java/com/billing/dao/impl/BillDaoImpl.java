@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class BillDaoImpl extends BaseDaoImpl implements BillDao {
 
     @Autowired
@@ -24,18 +25,23 @@ public class BillDaoImpl extends BaseDaoImpl implements BillDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Response<List<Bill>> findAll() {
-        return Response.Success(getCurrentSession().createQuery("FROM Bill").list());
-
+        try {
+            return Response.Success(getCurrentSession().createQuery("FROM Bill").list());
+        } catch (Exception exception) {
+            return Response.Failure(exception.getMessage());
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Response<List<Bill>> findDateRange(Timestamp startDate, Timestamp endDate) {
-        return Response.Success(getCurrentSession().createQuery("FROM Bill WHERE createdOn BETWEEN :startDate AND :endDate ")
-                       .setParameter("startDate", startDate)
-                       .setParameter("endDate", endDate)
-                       .getResultList());
+        try {
+            return Response.Success(getCurrentSession().createQuery("FROM Bill WHERE createdOn BETWEEN :startDate AND :endDate ")
+                    .setParameter("startDate", startDate)
+                    .setParameter("endDate", endDate)
+                    .getResultList());
+        } catch (Exception exception) {
+            return Response.Failure(exception.getMessage());
+        }
     }
 }
