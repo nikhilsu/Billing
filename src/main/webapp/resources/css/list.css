@@ -1,0 +1,88 @@
+.header, .submit-btn {
+    font-size: 30px;
+    font-weight: 100;
+    margin: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #ffffff;
+}
+
+.contrast-background {
+    background: #3cd3ad;
+}
+
+.header {
+    border-radius: 5px 5px 0 0;
+}
+
+
+.bill-categories {
+    display: list-item;
+    margin: 10px;
+    cursor: pointer;
+}
+
+ul {
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    line-height: 40px;
+    height: 40px;
+    padding-left: 20px;
+    background: #ffffff;
+}
+
+#container {
+    width: 800px;
+    margin: 65px auto;
+    border-radius: 5px;
+    background: #f7f7f7;
+    box-shadow: 0 0 50px 10px rgba(0, 0, 0, .1);
+}
+
+.category-name, .cost {
+    display: inline-block;
+    font-size: larger;
+}
+
+.cost {
+    float: right;
+}
+
+#total {
+    margin: 15px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.submit-btn {
+    border-radius: 0 0 5px 5px;
+    width: 100%;
+    font-weight: 300;
+    cursor: pointer;
+    outline: none;
+}
+
+.disabled {
+    background-color: #d0d0d0;
+    cursor: not-allowed;
+}
+
+.hovered-background {
+    background-color: #4bb8c4;
+}
+
+.patient-details {
+    padding: 10px;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.patient-phone {
+    float: right;
+}

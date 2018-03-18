@@ -36,13 +36,13 @@ public class BillController extends BaseController{
     }
 
     @RequestMapping(value = Constants.Route.NEW_BILL, method = RequestMethod.GET)
-    public String getNewBillForm(@RequestParam("patientId") int patientId, Model model) throws Exception {
+    public String getNewBillForm(HttpSession session, @RequestParam("patientId") int patientId, Model model) throws Exception {
         Response<Patient> findPatient = patientService.getById(patientId);
         if (findPatient.isSuccessful()) {
             Response<List<BillCategory>> allCategories = billCategoryService.getAll();
             model.addAttribute("billCategories", allCategories.data());
             model.addAttribute("patient", findPatient.data());
-
+            model.addAttribute(Constants.ModelAttributes.IS_ADMIN, currentUserAdmin(session));
             return Constants.RedirectPage.BILL_CREATE_FORM;
         }
         model.addAttribute(Constants.ModelAttributes.MESSAGE, "Patient not found");
