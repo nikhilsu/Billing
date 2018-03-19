@@ -15,6 +15,15 @@
     <mvc:resources mapping="/images/**" location="/resources/images/" />
     <mvc:resources mapping="/favicon.ico" location="/resources/images/favicon.ico" />
 
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location">
+            <value>/WEB-INF/spring-pdf-views.xml</value>
+        </property>
+        <property name="order" value="0" />
+    </bean>
+
     <!--Changes the directory of the views-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>

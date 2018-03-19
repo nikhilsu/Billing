@@ -33,7 +33,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Response createBill(Patient patient, List<BillCategory> billCategories) {
+    public Response<Integer> createBill(Patient patient, List<BillCategory> billCategories) {
         Timestamp timeNowInUTC = new Timestamp(Date.from(Instant.now()).getTime());
         Bill bill = new Bill().setBillCategories(billCategories)
                               .setPatient(patient)

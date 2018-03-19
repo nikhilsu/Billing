@@ -15,14 +15,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
-public class BillController extends BaseController{
+public class BillController extends BaseController {
     private final BillService billService;
     private PatientService patientService;
     private BillCategoryService billCategoryService;
@@ -56,9 +58,9 @@ public class BillController extends BaseController{
             String endDate = request.getParameter("endDate");
             Response<List<Bill>> byDateRange = billService.getByDateRange(startDate, endDate);
             if (!byDateRange.isSuccessful() || byDateRange.data().isEmpty()) {
-                model.addAttribute( Constants.ModelAttributes.MESSAGE, "No bills found for this range");
+                model.addAttribute(Constants.ModelAttributes.MESSAGE, "No bills found for this range");
             }
-            model.addAttribute( Constants.ModelAttributes.RESULT, byDateRange.data());
+            model.addAttribute(Constants.ModelAttributes.RESULT, byDateRange.data());
             return Constants.RedirectPage.BILL;
         }
         return Constants.RedirectPage.INDEX;
@@ -66,8 +68,10 @@ public class BillController extends BaseController{
 
 
     @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.POST)
-    public String createNewBill(HttpServletRequest request, Model model) throws Exception {
+    public ModelAndView createNewBill(HttpServletRequest request) throws Exception {
         String[] billCategoryIds = request.getParameterValues("billCategories");
+
+
         int patientId = Integer.valueOf(request.getParameter("patientId"));
         List<BillCategory> billCategories = new ArrayList<>();
 
@@ -76,8 +80,14 @@ public class BillController extends BaseController{
         }
         Response<Patient> patient = patientService.getById(patientId);
 
-        Response billCreation = billService.createBill(patient.data(), billCategories);
-        model.addAttribute(Constants.ModelAttributes.MESSAGE, billCreation.isSuccessful() ? "Success" : "Failed");
-        return Constants.RedirectPage.INDEX;
+        Response<Integer> billCreation = billService.createBill(patient.data(), billCategories);
+        if (billCreation.isSuccessful()) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("categories", billCategories);
+            map.put("patient", patient.data());
+            map.put("billId", billCreation.data());
+            return new ModelAndView("pdfRevenueSummary", map);
+        }
+        return new ModelAndView(Constants.RedirectPage.INDEX);
     }
 }

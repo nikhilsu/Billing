@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface BillService {
     Response<List<Bill>> getAll();
-    Response createBill(Patient patient, List<BillCategory> billCategories);
+    Response<Integer> createBill(Patient patient, List<BillCategory> billCategories);
     Response<List<Bill>> getByDateRange(String startDate, String endDate) throws Exception;
 }
