@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<head>
+<%@ include file="styles.jsp" %>
 
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-</head>
+<div class="header">
+    <div class="home">
+        <a href="${pageContext.request.contextPath}/"><img class="logo" src="images/logo.jpg" alt=""></a>
+    </div>
+    <div class="header-opts">
+        <a href="#">Change Password</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
+</div>

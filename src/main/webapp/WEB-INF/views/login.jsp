@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="pageTitle" scope="request" value="Login"/>
-<%@ include file="header.jsp" %>
+<%@ include file="styles.jsp" %>
 
 <body>
 <div class="login-page">

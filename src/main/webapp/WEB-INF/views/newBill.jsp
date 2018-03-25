@@ -10,7 +10,7 @@
 </c:if>
 
 <div id="container">
-    <h1 class="header contrast-background">Gubbi's clinic bill</h1>
+    <h1 class="heading contrast-background">Gubbi's clinic bill</h1>
     <div class="patient-details">
         <span class="patient-name">Name: ${patient.name}</span>
         <span class="patient-phone">Phone Number: ${patient.phoneNumber}</span>
