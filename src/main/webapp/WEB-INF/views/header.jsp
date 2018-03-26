@@ -3,7 +3,7 @@
 
 <div class="header">
     <div class="home">
-        <a href="${pageContext.request.contextPath}/"><img class="logo" src="images/logo.jpg" alt=""></a>
+        <a href="${pageContext.request.contextPath}/"><img class="logo" src="images/logo.jpg"></a>
     </div>
     <div class="header-opts">
         <a href="#">Change Password</a>

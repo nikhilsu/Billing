@@ -220,3 +220,19 @@ body {
 .index-container {
     text-align: center;
 }
+
+.select-patient-div {
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 20px;
+    width: 35%;
+    background-color: white;
+    margin: 50px auto;
+    text-align: center;
+    height: 230px;
+}
+
+.select-patient-btn {
+    outline: none;
+    text-decoration: none;
+}
