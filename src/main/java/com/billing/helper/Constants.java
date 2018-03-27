@@ -11,6 +11,7 @@ public class Constants {
         public static final String RESULT = "result";
         public static final String IS_ADMIN = "isAdmin";
         public static final String IS_ERROR = "isError";
+        public static final String FIND_PATIENT_MESSAGE = "findPatientMessage";
     }
 
     public static class Route {

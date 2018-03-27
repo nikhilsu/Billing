@@ -35,7 +35,8 @@ public class PatientController extends BaseController {
     public String getPatientsByPhoneNumber(@RequestParam("phoneNumber") String phoneNumber, Model model) throws Exception {
         Response<List<Patient>> byPhoneNumber = patientService.getByPhoneNumber(phoneNumber);
         if (!byPhoneNumber.isSuccessful() || byPhoneNumber.data().isEmpty()) {
-            model.addAttribute(Constants.ModelAttributes.MESSAGE, "Patient not found.");
+            model.addAttribute(Constants.ModelAttributes.FIND_PATIENT_MESSAGE, "Patient not found");
+            return Constants.Route.REDIRECT + Constants.Route.ROOT;
         }
         else  {
             model.addAttribute(Constants.ModelAttributes.RESULT, byPhoneNumber.data());
