@@ -43,6 +43,30 @@ public class LoginController {
         return Constants.RedirectPage.LOGIN_FORM;
     }
 
+    @RequestMapping(value = Constants.Route.CHANGE_PASSWORD, method = RequestMethod.GET)
+    public String getChangePasswordForm() {
+        return Constants.RedirectPage.CHANGE_PASSWORD_FORM;
+    }
+
+    @RequestMapping(value = Constants.Route.CHANGE_PASSWORD, method = RequestMethod.POST)
+    public String changePassword(HttpServletRequest request, Model model, HttpSession session) throws Exception {
+        String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute(Constants.ModelAttributes.IS_ERROR, true);
+            model.addAttribute(Constants.ModelAttributes.MESSAGE, "Password do not match");
+            return Constants.RedirectPage.CHANGE_PASSWORD_FORM;
+        }
+        Response changePassword = userService.changePassword((int) session.getAttribute(Constants.SessionKeys.LOGGED_IN_USER), password);
+        if (changePassword.isSuccessful())
+            return Constants.Route.REDIRECT + Constants.Route.LOGOUT;
+        else {
+            model.addAttribute(Constants.ModelAttributes.IS_ERROR, true);
+            model.addAttribute(Constants.ModelAttributes.MESSAGE, changePassword.errors());
+            return Constants.RedirectPage.CHANGE_PASSWORD_FORM;
+        }
+    }
+
     @RequestMapping(value = Constants.Route.LOGOUT)
     public String logout(HttpSession session) {
         session.removeAttribute(Constants.SessionKeys.LOGGED_IN_USER);

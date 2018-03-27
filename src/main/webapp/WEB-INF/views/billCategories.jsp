@@ -11,8 +11,6 @@
     })
 </script>
 
-
-
 <body>
 
 <div id="flash-message" class="

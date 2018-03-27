@@ -22,6 +22,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     }
 
     @Override
+    public Response update(User user) {
+        return super.update(user);
+    }
+
+    @Override
     public Response<User> findByUserId(String userId) throws Exception {
         Query query = getCurrentSession().createQuery("from User where userId = :userId");
         query.setParameter("userId", userId);

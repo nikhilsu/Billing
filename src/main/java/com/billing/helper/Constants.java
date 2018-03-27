@@ -26,6 +26,7 @@ public class Constants {
         public static final String NEW_BILL = "/new-bill";
         public static final String PATIENT = "/patient";
         public static final String NEW_PATIENT_FORM = "/new-patient";
+        public static final String CHANGE_PASSWORD = "/change-password";
 
         public static String NEW_BILL(int patientId) {
             return NEW_BILL + "?patientId=" + patientId;
@@ -41,5 +42,6 @@ public class Constants {
         public static final String NEW_PATIENT_FORM = "newPatientForm";
         public static final String PATIENT = "patient";
         public static final String BILL = "bill";
+        public static final String CHANGE_PASSWORD_FORM = "changePassword";
     }
 }

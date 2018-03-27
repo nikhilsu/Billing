@@ -62,6 +62,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Response changePassword(int userId, String newPassword) throws Exception {
+        Response response = userDao.findById(userId);
+        if(!response.isSuccessful() || response.data() == null)
+            return Response.Failure("User not found.");
+        String salt = passwordHash.getNextSalt();
+        String password_hash = passwordHash.hash(newPassword, salt);
+        User user = (User) response.data();
+        user.setPassword(newPassword)
+            .setPasswordHash(password_hash)
+            .setSalt(salt);
+        Response modelValidation = modelValidator.validate(user);
+        if (modelValidation.isSuccessful())
+            return userDao.update(user);
+        else
+            return modelValidation;
+    }
+
+    @Override
     public Response<User> getUserById(int userId) throws Exception {
         return Response.Success(userDao.findById(userId).data());
     }
