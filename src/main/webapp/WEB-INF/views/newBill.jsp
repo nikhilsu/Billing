@@ -5,10 +5,6 @@
 <script src="js/list.js"></script>
 
 <body>
-<c:if test="${isAdmin == true}">
-    <a href="${pageContext.request.contextPath}/bill-category">Create new bill category</a>
-</c:if>
-
 <div id="container">
     <h1 class="heading contrast-background">Gubbi's clinic bill</h1>
     <div class="patient-details">

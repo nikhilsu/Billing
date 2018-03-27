@@ -39,19 +39,30 @@ li {
 
 #container {
     width: 800px;
+}
+
+.big-container, #container {
     margin: 65px auto;
     border-radius: 5px;
     background: #f7f7f7;
     box-shadow: 0 0 50px 10px rgba(0, 0, 0, .1);
 }
 
-.category-name, .cost {
+.big-container {
+    width: 80%;
+}
+
+.category-name, .cost, .category-type {
     display: inline-block;
     font-size: larger;
 }
 
 .cost {
     float: right;
+}
+
+.category-type {
+    text-align: center;
 }
 
 #total {

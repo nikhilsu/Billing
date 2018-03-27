@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,55 +33,62 @@ public class BillCategoryController extends BaseController {
     @RequestMapping(value = Constants.Route.BILL_CATEGORY, method = RequestMethod.GET)
     public String getBillCategories(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         Response<List<BillCategory>> allBillCategories = billCategoryService.getAll();
+        allBillCategories.data().sort((c1, c2) -> (c1.getName().compareTo(c2.getName())));
         model.addAttribute(Constants.ModelAttributes.RESULT, allBillCategories.data());
         model.addAttribute(Constants.ModelAttributes.IS_ADMIN, currentUserAdmin(session));
-        String messageFromRedirect = request.getParameter(Constants.ModelAttributes.MESSAGE);
-        if (messageFromRedirect != null && !messageFromRedirect.isEmpty()) {
-            model.addAttribute(Constants.ModelAttributes.MESSAGE, messageFromRedirect);
-        }
         return Constants.RedirectPage.BILL_CATEGORIES;
     }
 
     @RequestMapping(value = Constants.Route.BILL_CATEGORY, method = RequestMethod.POST)
     public String createBillCategory(HttpServletRequest request, HttpSession session, Model model) throws Exception {
-        if (currentUserAdmin(session)) {
+        boolean isAdmin = currentUserAdmin(session);
+        model.addAttribute(Constants.ModelAttributes.IS_ADMIN, isAdmin);
+        if (isAdmin) {
             String name = request.getParameter("name");
             String costString = request.getParameter("cost");
             String typeString = request.getParameter("type");
             if (anyParameterNullOrEmpty(Arrays.asList(name, costString, typeString))) {
-                model.addAttribute(Constants.ModelAttributes.MESSAGE, "Fill all fields");
-                return Constants.Route.REDIRECT + Constants.Route.BILL_CATEGORY;
+                model.addAttribute(Constants.ModelAttributes.IS_ERROR, true);
+                model.addAttribute(Constants.ModelAttributes.TEST_CATEGORY_MESSAGE, "Fill all fields");
+                return Constants.RedirectPage.INDEX;
             }
             double cost = Double.valueOf(costString);
             CategoryType type = CategoryType.valueOf(typeString.toUpperCase());
             Response billCategoryCreation = billCategoryService.createBillCategory(name, cost, type);
             if (!billCategoryCreation.isSuccessful()) {
-                model.addAttribute(Constants.ModelAttributes.MESSAGE, billCategoryCreation.errors().get(0));
-                return Constants.Route.REDIRECT + Constants.Route.BILL_CATEGORY;
+                model.addAttribute(Constants.ModelAttributes.IS_ERROR, true);
+                model.addAttribute(Constants.ModelAttributes.TEST_CATEGORY_MESSAGE, billCategoryCreation.errors().get(0));
+                return Constants.RedirectPage.INDEX;
             }
-        }
-        return Constants.RedirectPage.INDEX;
-    }
-
-    @RequestMapping(value = Constants.Route.UPDATE_BILL_CATEGORY, method = RequestMethod.GET)
-    public String getCategoryUpdateForm(HttpSession session, @PathVariable("id") int id, Model model) throws Exception {
-        if (currentUserAdmin(session)) {
-            Response<BillCategory> getBillCategoryById = billCategoryService.getById(id);
-            model.addAttribute(Constants.ModelAttributes.RESULT, getBillCategoryById.data());
-            return Constants.RedirectPage.BILL_CATEGORY_UPDATE_FORM;
+            model.addAttribute(Constants.ModelAttributes.IS_ERROR, false);
+            model.addAttribute(Constants.ModelAttributes.TEST_CATEGORY_MESSAGE, "Successfully created!");
         }
         return Constants.RedirectPage.INDEX;
     }
 
     @RequestMapping(value = Constants.Route.UPDATE_BILL_CATEGORY, method = RequestMethod.POST)
-    public String updateBillCategory(HttpServletRequest request, HttpSession session, @PathVariable("id") int billCategoryId, Model model) throws Exception {
+    public String updateBillCategory(HttpServletRequest request, HttpSession session, @PathVariable("id") int billCategoryId, RedirectAttributes redirectAttributes) throws Exception {
         if (currentUserAdmin(session)) {
             String name = request.getParameter("name");
-            double cost = Double.valueOf(request.getParameter("cost"));
-            CategoryType type = CategoryType.valueOf(request.getParameter("type").toUpperCase());
-            Response billCategoryUpdate = billCategoryService.updateBillCategory(billCategoryId, name, cost, type);
-            model.addAttribute(Constants.ModelAttributes.MESSAGE, billCategoryUpdate.isSuccessful() ? "Success" : "Failed");
+            String costString = request.getParameter("cost");
+            String typeString = request.getParameter("type").toUpperCase();
+            if (anyParameterNullOrEmpty(Arrays.asList(name, costString, typeString))) {
+                redirectAttributes.addAttribute(Constants.ModelAttributes.IS_ERROR, true);
+                redirectAttributes.addAttribute(Constants.ModelAttributes.MESSAGE, "All fields required");
+                return Constants.Route.REDIRECT + Constants.Route.BILL_CATEGORY;
+            }
+            double cost = Double.valueOf(costString);
+            CategoryType type;
+            Response billCategoryUpdate = null;
+            try {
+                type = CategoryType.valueOf(typeString);
+                billCategoryUpdate = billCategoryService.updateBillCategory(billCategoryId, name, cost, type);
+            } catch (Exception ignored) {
+            }
+            boolean isError = billCategoryUpdate == null || !billCategoryUpdate.isSuccessful();
+            redirectAttributes.addAttribute(Constants.ModelAttributes.IS_ERROR, isError);
+            redirectAttributes.addAttribute(Constants.ModelAttributes.MESSAGE, isError ? "Error, try again!" : "Successfully Updated!");
         }
-        return Constants.RedirectPage.INDEX;
+        return Constants.Route.REDIRECT + Constants.Route.BILL_CATEGORY;
     }
 }

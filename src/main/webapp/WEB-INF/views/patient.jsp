@@ -10,7 +10,7 @@
         <p><b>Age:</b> ${patient.age}</p>
         <p><b>Phone number:</b> ${patient.phoneNumber}</p>
         <p><b>Email:</b> ${patient.email}</p>
-        <a href="${pageContext.request.contextPath}/new-bill?patientId=${patient.id}" class="select-patient-btn">
+        <a href="${pageContext.request.contextPath}/new-bill?patientId=${patient.id}" class="link-with-btn">
             <button class="index-submit">Select</button>
         </a>
     </div>

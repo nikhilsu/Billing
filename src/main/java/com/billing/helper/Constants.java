@@ -7,8 +7,10 @@ public class Constants {
 
     public static class ModelAttributes {
         public static final String MESSAGE = "message";
+        public static final String TEST_CATEGORY_MESSAGE = "testCategoryMessage";
         public static final String RESULT = "result";
         public static final String IS_ADMIN = "isAdmin";
+        public static final String IS_ERROR = "isError";
     }
 
     public static class Route {
@@ -34,7 +36,6 @@ public class Constants {
         public static final String LOGIN_FORM = "login";
         public static final String REGISTRATION_FORM = "register";
         public static final String BILL_CATEGORIES = "billCategories";
-        public static final String BILL_CATEGORY_UPDATE_FORM = "billCategoryUpdateForm";
         public static final String BILL_CREATE_FORM = "newBill";
         public static final String NEW_PATIENT_FORM = "newPatientForm";
         public static final String PATIENT = "patient";
