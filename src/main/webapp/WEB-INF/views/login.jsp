@@ -12,7 +12,6 @@
             <input type="text" placeholder="user id" name="userId"/>
             <input type="password" placeholder="password" name="password"/>
             <button>login</button>
-            <p class="message">Not registered? <a href="${pageContext.request.contextPath}/register">Create an account</a></p>
         </form>
     </div>
 </div>

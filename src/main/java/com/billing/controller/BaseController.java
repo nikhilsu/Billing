@@ -9,13 +9,13 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public abstract class BaseController {
-    private final UserService userService;
+    protected final UserService userService;
 
     protected BaseController(UserService userService) {
         this.userService = userService;
     }
 
-    boolean currentUserAdmin(HttpSession session) throws Exception {
+    protected boolean currentUserAdmin(HttpSession session) throws Exception {
         int userId = Integer.valueOf(session.getAttribute(Constants.SessionKeys.LOGGED_IN_USER).toString());
         Response<User> userById = userService.getUserById(userId);
         return userById.isSuccessful() && userById.data().isAdmin();

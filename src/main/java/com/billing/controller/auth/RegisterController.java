@@ -1,5 +1,6 @@
 package com.billing.controller.auth;
 
+import com.billing.controller.BaseController;
 import com.billing.helper.Constants;
 import com.billing.helper.Response;
 import com.billing.model.UserRole;
@@ -15,9 +16,12 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(Constants.Route.REGISTER)
-public class RegisterController {
+public class RegisterController extends BaseController {
+
     @Autowired
-    private UserService userService;
+    public RegisterController(UserService userService) {
+        super(userService);
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String showRegistrationForm() {
@@ -26,18 +30,21 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String register(HttpServletRequest request, HttpSession session, Model model) throws Exception {
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String userId = request.getParameter("userId");
-        String password = request.getParameter("password");
-        Response save = userService.createUser(firstName, lastName, userId, password, UserRole.USER);
-        model.addAttribute(Constants.ModelAttributes.RESULT, save.isSuccessful());
-        if (save.isSuccessful()) {
-            session.setAttribute(Constants.SessionKeys.LOGGED_IN_USER, save.data());
-            return Constants.Route.REDIRECT + Constants.Route.ROOT;
-        }
+        if (currentUserAdmin(session)) {
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String userId = request.getParameter("userId");
+            String password = request.getParameter("password");
+            Response save = userService.createUser(firstName, lastName, userId, password, UserRole.USER);
+            model.addAttribute(Constants.ModelAttributes.RESULT, save.isSuccessful());
+            if (save.isSuccessful()) {
+                session.setAttribute(Constants.SessionKeys.LOGGED_IN_USER, save.data());
+                return Constants.Route.REDIRECT + Constants.Route.ROOT;
+            }
 
-        model.addAttribute(Constants.ModelAttributes.MESSAGE, save.errors().get(0));
-        return Constants.RedirectPage.REGISTRATION_FORM;
+            model.addAttribute(Constants.ModelAttributes.MESSAGE, save.errors().get(0));
+            return Constants.RedirectPage.REGISTRATION_FORM;
+        }
+        return Constants.RedirectPage.INDEX;
     }
 }
