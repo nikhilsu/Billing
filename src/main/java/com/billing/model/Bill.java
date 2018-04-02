@@ -1,11 +1,13 @@
 package com.billing.model;
 
+import com.billing.helper.Masker;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
@@ -77,5 +79,13 @@ public class Bill {
             total += category.getCost();
         }
         return total;
+    }
+
+    public String getCreatedOnDateString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(createdOn);
+    }
+
+    public String getMaskedId() {
+        return Masker.maskDbId(id);
     }
 }

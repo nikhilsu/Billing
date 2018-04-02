@@ -1,6 +1,7 @@
 package com.billing.controller;
 
 import com.billing.helper.Constants;
+import com.billing.helper.Masker;
 import com.billing.helper.Response;
 import com.billing.model.Bill;
 import com.billing.model.BillCategory;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BillController extends BaseController {
@@ -60,7 +62,14 @@ public class BillController extends BaseController {
             if (!byDateRange.isSuccessful() || byDateRange.data().isEmpty()) {
                 model.addAttribute(Constants.ModelAttributes.MESSAGE, "No bills found for this range");
             }
-            model.addAttribute(Constants.ModelAttributes.RESULT, byDateRange.data());
+            else {
+                List<Bill> bills = byDateRange.data();
+                Map<String, Bill> billsByMaskedId = new HashMap<>();
+                for (Bill bill : bills) {
+                    billsByMaskedId.put(Masker.maskDbId(bill.getId()), bill);
+                }
+                model.addAttribute(Constants.ModelAttributes.RESULT, billsByMaskedId);
+            }
             return Constants.RedirectPage.BILL;
         }
         return Constants.RedirectPage.INDEX;
