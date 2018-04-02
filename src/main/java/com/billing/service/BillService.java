@@ -11,4 +11,5 @@ public interface BillService {
     Response<List<Bill>> getAll();
     Response<Integer> createBill(Patient patient, List<BillCategory> billCategories);
     Response<List<Bill>> getByDateRange(String startDate, String endDate) throws Exception;
+    Response<Bill> getById(int billId);
 }

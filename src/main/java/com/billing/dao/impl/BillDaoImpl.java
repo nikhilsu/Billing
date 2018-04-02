@@ -44,4 +44,14 @@ public class BillDaoImpl extends BaseDaoImpl implements BillDao {
             return Response.Failure(exception.getMessage());
         }
     }
+
+    @Override
+    public Response<Bill> findBillById(int billId) {
+        try {
+            Bill result = getCurrentSession().get(Bill.class, billId);
+            return result == null ? Response.Failure("No element found") : Response.Success(result);
+        } catch (Exception exception) {
+            return Response.Failure(exception.getMessage());
+        }
+    }
 }

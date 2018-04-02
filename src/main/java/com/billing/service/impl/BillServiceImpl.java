@@ -49,4 +49,9 @@ public class BillServiceImpl implements BillService {
         Date end = formatter.parse(endDate);
         return billDao.findDateRange(new Timestamp(start.getTime()), new Timestamp(end.getTime() + TimeUnit.DAYS.toMillis( 1 )));
     }
+
+    @Override
+    public Response<Bill> getById(int billId) {
+        return billDao.findBillById(billId);
+    }
 }

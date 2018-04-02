@@ -215,15 +215,23 @@ body {
 
 .index-submit {
     padding: 10px 30px;
+    font-size: 20px;
+    margin: 10px 25px;
+}
+
+.index-submit, .view-bill-button {
     display: inline-table;
     border-radius: 10px;
     background-color: #3cd3ad;
     color: white;
     text-transform: uppercase;
-    font-size: 20px;
-    margin: 10px 25px;
     cursor: pointer;
     font-weight: 600;
+}
+
+.view-bill-button {
+    padding: 5px 10px;
+    font-size: 12px;
 }
 
 .index-help-text {

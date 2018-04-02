@@ -13,6 +13,7 @@ import com.billing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,8 +82,6 @@ public class BillController extends BaseController {
     @RequestMapping(value = Constants.Route.BILL, method = RequestMethod.POST)
     public ModelAndView createNewBill(HttpServletRequest request) throws Exception {
         String[] billCategoryIds = request.getParameterValues("billCategories");
-
-
         int patientId = Integer.valueOf(request.getParameter("patientId"));
         List<BillCategory> billCategories = new ArrayList<>();
 
@@ -99,6 +98,22 @@ public class BillController extends BaseController {
             map.put("billId", billCreation.data());
             return new ModelAndView("pdfRevenueSummary", map);
         }
-        return new ModelAndView(Constants.RedirectPage.INDEX);
+        return new ModelAndView(Constants.Route.REDIRECT + Constants.Route.ROOT);
+    }
+
+    @RequestMapping(value = Constants.Route.VIEW_BILL_PDF)
+    public ModelAndView viewBillPdf(@PathVariable("id") int billId) throws Exception {
+        Response<Bill> billById = billService.getById(billId);
+
+        if (!billById.isSuccessful()) {
+            return new ModelAndView(Constants.Route.REDIRECT + Constants.Route.ROOT);
+        }
+
+        Bill bill = billById.data();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("categories", bill.getBillCategories());
+        map.put("patient", bill.getPatient());
+        map.put("billId", bill.getId());
+        return new ModelAndView("pdfRevenueSummary", map);
     }
 }

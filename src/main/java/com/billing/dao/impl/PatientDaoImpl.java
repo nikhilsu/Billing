@@ -38,7 +38,8 @@ public class PatientDaoImpl extends BaseDaoImpl implements PatientDao {
     @Override
     public Response<Patient> findById(int patientId) {
         try {
-            return Response.Success(getCurrentSession().get(Patient.class, patientId));
+            Patient patient = getCurrentSession().get(Patient.class, patientId);
+            return patient == null ? Response.Failure("No element found") : Response.Success(patient);
         } catch (Exception exception) {
             return Response.Failure(exception.getMessage());
         }
