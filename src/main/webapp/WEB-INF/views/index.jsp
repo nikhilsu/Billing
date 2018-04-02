@@ -51,6 +51,11 @@
 
         <div class="bill-details">
             <span class="index-page-header">Bill details</span>
+            <c:if test="${!empty param.billDetailsMessage}">
+                <span class="error-message">
+                        ${param.billDetailsMessage}
+                </span>
+            </c:if>
             <form action="${pageContext.request.contextPath}/bill" method="get">
                 <label>
                     <span class="index-help-text">Start Date:</span>

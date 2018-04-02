@@ -1,6 +1,5 @@
 package com.billing.model;
 
-import com.billing.helper.Masker;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -83,9 +82,5 @@ public class Bill {
 
     public String getCreatedOnDateString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(createdOn);
-    }
-
-    public String getMaskedId() {
-        return Masker.maskDbId(id);
     }
 }

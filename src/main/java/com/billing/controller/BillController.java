@@ -20,10 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class BillController extends BaseController {
@@ -58,6 +55,11 @@ public class BillController extends BaseController {
         if (currentUserAdmin(session)) {
             String startDate = request.getParameter("startDate");
             String endDate = request.getParameter("endDate");
+            if (anyParameterNullOrEmpty(Arrays.asList(startDate, endDate))) {
+                model.addAttribute(Constants.ModelAttributes.BILL_DETAILS_MESSAGE, "Fill in both dates!");
+                return Constants.Route.REDIRECT + Constants.Route.ROOT;
+            }
+
             Response<List<Bill>> byDateRange = billService.getByDateRange(startDate, endDate);
             if (!byDateRange.isSuccessful() || byDateRange.data().isEmpty()) {
                 model.addAttribute(Constants.ModelAttributes.MESSAGE, "No bills found for this range");

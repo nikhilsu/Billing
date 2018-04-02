@@ -8,6 +8,7 @@ public class Constants {
     public static class ModelAttributes {
         public static final String MESSAGE = "message";
         public static final String TEST_CATEGORY_MESSAGE = "testCategoryMessage";
+        public static final String BILL_DETAILS_MESSAGE = "billDetailsMessage";
         public static final String RESULT = "result";
         public static final String IS_ADMIN = "isAdmin";
         public static final String IS_ERROR = "isError";
