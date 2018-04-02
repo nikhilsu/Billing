@@ -10,13 +10,15 @@
     <h1 class="heading contrast-background">Bills from ${param.startDate} to ${param.endDate}</h1>
 
     <table class="categories-table">
-        <th>ID</th>
+        <th>Bill Id</th>
         <th>Date</th>
+        <th>Patient Name</th>
         <th>Total cost(in Rs.)</th>
         <c:forEach var="billByMaskedId" items="${result}">
             <tr>
                 <td>${billByMaskedId.key}</td>
                 <td>${billByMaskedId.value.createdOnDateString}</td>
+                <td>${billByMaskedId.value.patient.name}</td>
                 <td>${billByMaskedId.value.totalCost()}</td>
             </tr>
         </c:forEach>
