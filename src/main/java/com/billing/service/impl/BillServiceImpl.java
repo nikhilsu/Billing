@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Repository
 @Transactional
@@ -46,6 +47,6 @@ public class BillServiceImpl implements BillService {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date start = formatter.parse(startDate);
         Date end = formatter.parse(endDate);
-        return billDao.findDateRange(new Timestamp(start.getTime()), new Timestamp(end.getTime()));
+        return billDao.findDateRange(new Timestamp(start.getTime()), new Timestamp(end.getTime() + TimeUnit.DAYS.toMillis( 1 )));
     }
 }

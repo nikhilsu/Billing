@@ -31,7 +31,7 @@ public class PdfRevenueReportView extends AbstractPdfView {
         Patient patient = (Patient) model.get("patient");
         Integer billId = (Integer) model.get("billId");
 
-        URL logoURL = getClass().getClassLoader().getResource("/images_for_reports/logo_in_pdf.jpg");
+        URL logoURL = getClass().getClassLoader().getResource("/images_for_reports/logo_in_pdf.png");
         if (logoURL == null)
             throw new Exception("Logo resource not found!");
 

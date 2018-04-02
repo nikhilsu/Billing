@@ -32,7 +32,7 @@
         <th>Type</th>
         <th>cost(in Rs.)</th>
         <c:if test="${isAdmin == true}">
-            <th>Update</th>
+            <th>Action</th>
         </c:if>
         <c:set var="i" scope="session" value="0"/>
         <c:forEach var="category" items="${result}">
@@ -66,7 +66,7 @@
                                    value="${category.cost}"/>
                         </td>
                         <td>
-                            <button type="submit" form="edit-${i}" class="index-submit">Edit</button>
+                            <button type="submit" form="edit-${i}" class="index-submit">Update</button>
                         </td>
                     </tr>
                 </c:when>
